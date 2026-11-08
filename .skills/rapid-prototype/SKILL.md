@@ -24,6 +24,13 @@ license: MIT
 5. **Preview when cheap.** Run a single quick start/build/smoke command if it is inexpensive and required to make the demo usable. Do not write test files, run a full test suite, enforce coverage, or perform generic multi-pass code review unless the user asks or a material risk makes a specific check necessary.
 6. **Deliver and stop.** Provide how to run it, what is demonstrated, and any known gaps. Never call an untested prototype tested or production-ready.
 
+## Choose a viable implementation under actual constraints
+
+- Prefer the least costly approach that satisfies the requested behavior. Include dependency installation, network and service delays, user setup, failure risk, and maintenance in that choice.
+- For a new self-contained demo, consider a static implementation when it covers the requirements. Use a framework, backend, or hosted tool when it provides needed behavior or lowers the actual cost. Preserve an existing working stack and explicit user choices.
+- Before a slow external call, check whether its result is needed now. If the tool supports yielding or background work, start the operation and continue independent tasks; otherwise use an available timeout or postpone a nonessential call. Do not assume a blocking tool permits parallel work.
+- If an optional resource is unavailable, continue with a labeled local substitute and revisit it when useful. A missing required integration remains an open requirement. Collect or stop background jobs before handoff when supported.
+
 ## No-ceremony defaults
 
 - No extended design interviews for low-risk choices.

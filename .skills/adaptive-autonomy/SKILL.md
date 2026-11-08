@@ -17,6 +17,8 @@ This is a control policy, **not** a mandate to do less testing, to distrust the 
 3. **Progress before ritual.** Run an action because it will implement a requirement, distinguish plausible causes, reduce material risk, or unblock a dependency—not because a checklist says every step needs a ceremony.
 4. **Human authority where needed.** Ask the user about product choices, permissions, credentials, external approvals, irreversible decisions, or subjective outcomes they alone can judge. Do not ask them to perform work the agent can do safely with available tools.
 5. **Safety is not optional.** Never use this skill to bypass required security, privacy, financial, deployment, or destructive-operation safeguards.
+6. **Cost under actual constraints.** Choose the least costly viable path that meets the requirements in the current environment. Consider setup, network waiting, service availability, human intervention, failure risk, and maintenance alongside implementation effort. Preserve the user's explicit stack and scope.
+7. **Dependency-aware execution.** A slow external operation blocks only the work that actually depends on its result. Choose a supported execution method before starting it; continue independent work when possible.
 
 ## On task entry: identify the decision boundary
 
@@ -53,6 +55,14 @@ After a meaningful failure, ambiguity, or decision point, choose one of four act
 | **ESCALATE** | Only a human can supply information, authorization, intent, or external action; or further autonomous work is not justified. | State the exact decision/action required, its consequence, and a recommended default if safe. |
 
 Do not pretend this table can mechanically calculate the best action. Use judgment, and remain responsive to new evidence.
+
+## Slow or unavailable dependencies
+
+- Before a potentially slow install, download, or service call, identify what needs its result and whether the tool supports yielding or background execution. Do not assume you can interrupt a blocking call or run other work during it.
+- When supported and useful, start the slow operation, retain its job/session handle, and continue independent implementation. Otherwise use a bounded timeout when available, or do independent work first if the result is not yet needed. Choose the order that reduces time to a useful deliverable.
+- Set waiting and retry limits according to the dependency's importance and the tool's controls. Avoid frequent polling that adds no information. If no timeout or yielding control exists, account for that limitation when choosing the tool or approach.
+- For an optional unavailable resource, use a labeled local placeholder, cached asset, or another sufficient approach that respects the requirements. Preserve completed work and return to the dependency when its result becomes necessary or new evidence makes a retry useful.
+- If a required dependency has no viable substitute, report the specific blocker and finish independent work where useful. Do not hide a missing requirement behind a fallback. Collect results or stop unneeded background jobs before handoff where the tool allows it.
 
 ## Anti-loop rule
 

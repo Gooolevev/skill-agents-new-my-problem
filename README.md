@@ -2,15 +2,15 @@
 
 An **experimental** collection of [Agent Skills](https://agentskills.io/) for navigating the tension between speedy prototypes, deliberate engineering, and autonomous decision-making.
 
-> **Hypothesis:** Better coding agents know *when to move fast*, *when to think deeply*, and *when to stop a low-value diagnostic loop*. These skills have not yet been shown to improve performance in a controlled evaluation.
+> **Hypothesis:** Better coding agents choose sufficient implementations under actual constraints, avoid low-value diagnostic loops, and keep independent work moving when external dependencies stall. These skills have not yet been shown to improve performance in a controlled evaluation.
 
 ## The three skills
 
 | Skill | Activate when | Default behavior |
 |---|---|---|
-| [`rapid-prototype`](rapid-prototype/SKILL.md) | A quick demo, exploratory UI, mockup or throwaway experiment | Implement first; no new tests, full test suite or extended review by default. Cheap build/preview if needed. |
-| [`deep-engineering`](deep-engineering/SKILL.md) | A complex, high-risk, long-lived or production-quality change | Reason about architecture, plan meaningful slices, verify consequential behavior; avoid endless checking. |
-| [`adaptive-autonomy`](adaptive-autonomy/SKILL.md) | The agent is uncertain, stuck, repetitively debugging or deciding who should act | Choose ACT / PROBE / PIVOT / ESCALATE; choose a suitable execution mode if needed. |
+| [`rapid-prototype`](.skills/rapid-prototype/SKILL.md) | A quick demo, exploratory UI, mockup or throwaway experiment | Implement first; no new tests, full test suite or extended review by default. Cheap build/preview if needed. |
+| [`deep-engineering`](.skills/deep-engineering/SKILL.md) | A complex, high-risk, long-lived or production-quality change | Reason about architecture, plan meaningful slices, verify consequential behavior; avoid endless checking. |
+| [`adaptive-autonomy`](.skills/adaptive-autonomy/SKILL.md) | The agent is uncertain, stuck, repetitively debugging or deciding who should act | Choose ACT / PROBE / PIVOT / ESCALATE; choose a suitable execution mode if needed. |
 
 **Not all three at once.** `rapid-prototype` and `deep-engineering` are alternative execution postures. `adaptive-autonomy` is an optional decision policy that can assist either one. Explicit user instructions and required safeguards always override their defaults.
 
@@ -20,11 +20,11 @@ For detailed specification, staged implementation, testing, and review, you can 
 
 ## Install in a Codex project
 
-Copy any/all skill folders, including their own `references/` when present, into the project's `.agents/skills/` directory:
+Copy any/all skill folders from this repository's `.skills/`, including their own `references/` when present, into the project's `.agents/skills/` directory:
 
 ```bash
 mkdir -p .agents/skills
-cp -R /path/to/agent-judgment-skill/{adaptive-autonomy,rapid-prototype,deep-engineering} .agents/skills/
+cp -R /path/to/agent-judgment-skill/.skills/{adaptive-autonomy,rapid-prototype,deep-engineering} .agents/skills/
 ```
 
 The command assumes a Bash-compatible shell. In **fish**, use:
@@ -32,7 +32,7 @@ The command assumes a Bash-compatible shell. In **fish**, use:
 ```fish
 mkdir -p .agents/skills
 for skill in adaptive-autonomy rapid-prototype deep-engineering
-    cp -R /path/to/agent-judgment-skill/$skill .agents/skills/
+    cp -R /path/to/agent-judgment-skill/.skills/$skill .agents/skills/
 end
 ```
 
@@ -49,6 +49,8 @@ Automatic selection is tool-dependent; explicit invocation is the most predictab
 ## Evaluate before making performance claims
 
 Use matched tasks **with and without** the relevant skill. Record elapsed time, tokens, correctness, functioning deliverables, redundant tool calls, and human interventions. In particular, test whether rapid mode accidentally hides mistakes, and whether deep mode gets stuck. Evaluation templates: [`evals/scenarios.md`](evals/scenarios.md), [`evals/rubric.md`](evals/rubric.md).
+
+The [Experiment 001 case note](evals/experiments/001-similar-output-different-cost.md) records a user-reported exploratory comparison, including unverified measurements and limitations. It does not establish a causal speedup. The [Network Degradation Test](evals/network-degradation.md) specifies a future comparison of skill use and network conditions, with separate measures for delivered quality, waiting, and packaging cost.
 
 ## Validation
 

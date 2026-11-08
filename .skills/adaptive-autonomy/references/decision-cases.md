@@ -61,3 +61,19 @@ These are behavioral examples, not scripts that must be copied verbatim.
 **Better behavior:** Confirm the failure is pre-existing if practical; document it briefly; use targeted checks and proceed with the alignment work. Do not misrepresent the overall suite as passing.
 
 **Choice:** PIVOT to user's task, surface pre-existing failure in final status.
+
+## G. An optional image download stalls
+
+**Task:** Build a catalog demo. Remote photos are slow; layout, filters, and modal behavior do not depend on their contents.
+
+**Better behavior:** Before downloading, choose a bounded request or a supported yielding/background call. When background execution is available, retain the handle and build the catalog using labeled local placeholders while it runs. With a blocking-only tool, defer the optional download or bound its wait if possible. Check the download when its result is needed; collect it or stop the unused job before handoff. Report any remaining placeholders.
+
+**Choice:** ACT on independent work; PIVOT from the stalled optional resource. If the task requires the actual photos, preserve that requirement in the final status.
+
+## H. A new demo does not need a backend
+
+**Task:** Create a shareable catalog with client-side filtering and local favorites. No stack is specified, no server persistence is required, and package downloads are unreliable.
+
+**Better behavior:** Compare a static implementation with available framework or hosted tooling using actual setup and delivery costs. Choose the sufficient path with lower cost; explain only a consequential trade-off. Do not impose a static rewrite if the user instead asks to extend an existing React application.
+
+**Choice:** ACT with a sufficient implementation; do not add infrastructure for hypothetical future requirements.
