@@ -1,28 +1,63 @@
-# Adaptive Autonomy — навык рациональной автономности AI-агентов
+# Agent Judgment Skills — three complementary modes for coding agents
 
-**Гипотеза:** агент должен не просто выполнять инструкции, больше тестировать или быстрее писать код, а **разумно выбирать следующий шаг**: действовать, исследовать, переключиться или обратиться к человеку.
+An **experimental** collection of [Agent Skills](https://agentskills.io/) for navigating the tension between speedy prototypes, deliberate engineering, and autonomous decision-making.
 
-Это экспериментальная версия v0.1. Эффективность пока не доказана.
+> **Hypothesis:** Better coding agents know *when to move fast*, *when to think deeply*, and *when to stop a low-value diagnostic loop*. These skills have not yet been shown to improve performance in a controlled evaluation.
 
-## Зачем?
+## The three skills
 
-Проблема: агент обнаруживает ошибку и часами повторяет диагностику, хотя критическое решение требует человеческого доступа или выбора. Другая крайность: агент слишком рано сдаётся и просит пользователя решить проблему, которую мог исправить сам.
+| Skill | Activate when | Default behavior |
+|---|---|---|
+| [`rapid-prototype`](rapid-prototype/SKILL.md) | A quick demo, exploratory UI, mockup or throwaway experiment | Implement first; no new tests, full test suite or extended review by default. Cheap build/preview if needed. |
+| [`deep-engineering`](deep-engineering/SKILL.md) | A complex, high-risk, long-lived or production-quality change | Reason about architecture, plan meaningful slices, verify consequential behavior; avoid endless checking. |
+| [`adaptive-autonomy`](adaptive-autonomy/SKILL.md) | The agent is uncertain, stuck, repetitively debugging or deciding who should act | Choose ACT / PROBE / PIVOT / ESCALATE; choose a suitable execution mode if needed. |
 
-Навык предлагает баланс:
+**Not all three at once.** `rapid-prototype` and `deep-engineering` are alternative execution postures. `adaptive-autonomy` is an optional decision policy that can assist either one. Explicit user instructions and required safeguards always override their defaults.
 
-- отличать **цель пользователя** от предложенной им технологии;
-- проводить диагностику, если она даст **новую информацию**;
-- прекращать повторения, которые ничего не проясняют;
-- продолжать независимые задачи, если одна часть заблокирована;
-- обращаться к человеку за **конкретным решением**, а не абстрактной помощью;
-- проверять результат пропорционально риску, не отключая необходимые меры безопасности.
+### Using Addy Osmani's agent-skills for deep work
 
-## Как проверить
+For detailed specification, staged implementation, testing, and review, you can install [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) separately. Our `deep-engineering` skill selects an appropriate mode and can refer to the matching specialized skills **if installed**. It does not bundle or copy that project. The external suite's `/build auto` still uses test-driven steps, so it is not a rapid no-tests preset.
 
-Установи папку `adaptive-autonomy` в `.agents/skills/` своего проекта Codex. В задаче укажи `$adaptive-autonomy`. После этого протестируй одинаковые задачи с навыком и без него, желательно на одинаковой модели и в изолированной среде.
+## Install in a Codex project
 
-В [evals/scenarios.md](evals/scenarios.md) приведены восемь сценариев и ожидаемые реакции агента. Результаты пока не получены.
+Copy any/all skill folders, including their own `references/` when present, into the project's `.agents/skills/` directory:
 
-> Важнее всего не обещание «агент станет на 50% быстрее», а воспроизводимые случаи, в которых он действительно экономит время **без потери качества и безопасности**.
+```bash
+mkdir -p .agents/skills
+cp -R /path/to/agent-judgment-skill/{adaptive-autonomy,rapid-prototype,deep-engineering} .agents/skills/
+```
 
-Полная инструкция: [README.md](README.md). Сам навык: [SKILL.md](adaptive-autonomy/SKILL.md).
+The command assumes a Bash-compatible shell. In **fish**, use:
+
+```fish
+mkdir -p .agents/skills
+for skill in adaptive-autonomy rapid-prototype deep-engineering
+    cp -R /path/to/agent-judgment-skill/$skill .agents/skills/
+end
+```
+
+Then ask the agent, for example:
+
+```text
+$rapid-prototype Build a responsive animated homepage. No automated tests; show me a working demo.
+$deep-engineering Refactor VIN extraction with reference fixtures, integration tests, and failure analysis.
+$adaptive-autonomy The integration is blocked. Decide whether to probe, pivot, or ask for my input.
+```
+
+Automatic selection is tool-dependent; explicit invocation is the most predictable way to compare behavior. You can also install a single skill instead of all three.
+
+## Evaluate before making performance claims
+
+Use matched tasks **with and without** the relevant skill. Record elapsed time, tokens, correctness, functioning deliverables, redundant tool calls, and human interventions. In particular, test whether rapid mode accidentally hides mistakes, and whether deep mode gets stuck. Evaluation templates: [`evals/scenarios.md`](evals/scenarios.md), [`evals/rubric.md`](evals/rubric.md).
+
+## Validation
+
+```bash
+python3 scripts/validate_skill.py
+```
+
+This performs a **lightweight structural check**, not a behavioral evaluation or a substitute for the official `skills-ref validate` tool. Specification: [agentskills.io/specification](https://agentskills.io/specification).
+
+## License
+
+MIT. See [LICENSE](LICENSE).

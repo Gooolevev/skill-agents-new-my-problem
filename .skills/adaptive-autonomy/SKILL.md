@@ -29,6 +29,18 @@ Do this briefly, without producing a long plan unless the task requires one.
 
 For low-risk, clear, reversible work: **implement first**. Do not turn this check into a separate deliverable.
 
+## Select an execution mode without making it another ceremony
+
+This skill chooses **how to continue**, not how many tests must run. When execution mode matters, use the user's desired outcome and risk:
+
+| Signal | Preferred mode | Verification default |
+|---|---|---|
+| "Sketch it", "make a demo", "quickly", "show me the UI", reversible experiment | `$rapid-prototype` if installed | No new automated tests by default; cheap preview/build only when needed |
+| "Production-ready", "robust", "design carefully", migration, high-risk integration | `$deep-engineering` if installed; Addy Osmani lifecycle skills where installed | Focused tests, careful design, relevant review |
+| User says nothing about speed/rigor | Choose the **least ceremony compatible with the consequences** | Risk-proportionate checks |
+
+These are optional companion skills, **not prerequisites**. Do not pretend to load an uninstalled skill. Never use fast mode to bypass a required security, privacy, destructive-operation, or authorization safeguard. Don't silently change modes: briefly explain consequential scope changes. The user's explicit instruction to run tests, skip optional tests, or prioritize a prototype takes precedence over defaults where safe.
+
 ## Choose the next action
 
 After a meaningful failure, ambiguity, or decision point, choose one of four actions:
