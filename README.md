@@ -8,9 +8,9 @@ An **experimental** collection of [Agent Skills](https://agentskills.io/) for na
 
 | Skill | Activate when | Default behavior |
 |---|---|---|
-| [`rapid-prototype`](rapid-prototype/SKILL.md) | A quick demo, exploratory UI, mockup or throwaway experiment | Implement first; no new tests, full test suite or extended review by default. Cheap build/preview if needed. |
-| [`deep-engineering`](deep-engineering/SKILL.md) | A complex, high-risk, long-lived or production-quality change | Reason about architecture, plan meaningful slices, verify consequential behavior; avoid endless checking. |
-| [`adaptive-autonomy`](adaptive-autonomy/SKILL.md) | The agent is uncertain, stuck, repetitively debugging or deciding who should act | Choose ACT / PROBE / PIVOT / ESCALATE; choose a suitable execution mode if needed. |
+| [`rapid-prototype`](.skills/rapid-prototype/SKILL.md) | A quick demo, exploratory UI, mockup or throwaway experiment | Implement first; no new tests, full test suite or extended review by default. Cheap build/preview if needed. |
+| [`deep-engineering`](.skills/deep-engineering/SKILL.md) | A complex, high-risk, long-lived or production-quality change | Reason about architecture, plan meaningful slices, verify consequential behavior; avoid endless checking. |
+| [`adaptive-autonomy`](.skills/adaptive-autonomy/SKILL.md) | The agent is uncertain, stuck, repetitively debugging or deciding who should act | Choose ACT / PROBE / PIVOT / ESCALATE; choose a suitable execution mode if needed. |
 
 **Not all three at once.** `rapid-prototype` and `deep-engineering` are alternative execution postures. `adaptive-autonomy` is an optional decision policy that can assist either one. Explicit user instructions and required safeguards always override their defaults.
 
