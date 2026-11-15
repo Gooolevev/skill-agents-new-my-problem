@@ -1,3 +1,5 @@
+# not implemented and abandoned
+
 # Agent Judgment Skills — three complementary modes for coding agents
 
 An **experimental** collection of [Agent Skills](https://agentskills.io/) for navigating the tension between speedy prototypes, deliberate engineering, and autonomous decision-making.
